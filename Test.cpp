@@ -15,7 +15,7 @@ bool isPrimeNumber(int n) {
 	return Pr;
 }
 
-//Mission_1
+//Mission_1 (100-->500)
 int getReady(int& HP, const int& ID, int& M, const int& E1){
 
 //TH_1 (100-->199)
@@ -92,16 +92,16 @@ else if (E1==500) {
 }
 else return -999;
 }
-// Misstion_2
+// Misstion_2 (100-->499)
 int firstBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E2){
 	
 	//TH_1
 	if (E2>=100 && E2<=199) {
-		HP1=1.1*HP1; HP2=HP2*1.3;
+		HP1=11*HP1/10; HP2=HP2*13/10;
 	}
 	//TH_2
 	else if (E2>=200 && E2<=299) {
-		HP1=1.7*HP1; HP2=HP2*1.2;
+		HP1=17*HP1/10; HP2=HP2*12/10;
 	}
 	//TH3
 	else if (E2>=300 && E2<=399){
@@ -110,21 +110,22 @@ int firstBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E
 	}
 	//TH4
 	else if (E2>=400 && E2<=499){
-		HP1=HP1*1.3*0.5;
-		HP2=HP2*0.8;
+		HP1=(HP1*130/100)*50/100;
+		HP2=HP2*80/100;
 	}
 	//Ko vua & tuong
-	if (ID1==0 && ID2==0) {
+	if(E2<100 || E2>=500) return -999;
+	else if (ID1==0 && ID2==0) {
 	int HP_1=HP1; 
 	int m; m=(2*HP1*HP2)/(HP1+HP2)+1; //Chưa làm tròn
   	HP1=HP1-abs(HP2-m);
    	HP2=HP2-abs(HP_1-m);
 	if (HP1<0) HP1=0;
 	if (HP2<0) HP2=0;
-	HP1=(HP1*80)/100; // TH_5
    	if (HP1>HP2) return 1;
 	else if (HP1==HP2) return 0;
 	else if (HP1<HP2) return -1;
+	HP1=(HP1*80)/100; // TH_5
 	}
 	//Co vua ko tuong
 	else if (ID1==1 && ID2==0) {
@@ -133,17 +134,22 @@ int firstBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E
 		return 1;
 	}
 	//Ko vua co tuong
-	else if (ID1==0 && ID2==1){
-		HP1=0;HP1=(HP1*80)/100;
+	else if (ID1==0 && ID2==2){
+		HP1=0;
 		return -1;
 	}
-	else {HP1=(HP1*80)/100;return 0;}
+	else if(ID1==1 && ID2==2) {HP1=(HP1*80)/100;return 0;}
 
 }
 int main(){
 	int HP=1000; int M=400;int E=450;int ID=1;
-	int HP1=100;int HP2=200;int E2=320;int ID1=1;int ID2=0;
-	cout<<firstBattle(HP1,HP2,ID1,ID2,E2);
+	int HP1;int HP2;int E2;int ID1;int ID2;
+	cout<<"HP1=";cin>>HP1;
+	cout<<"HP2=";cin>>HP2;
+	cout<<"E2=";cin>>E2;
+	cout<<"ID1=";cin>>ID1;
+	cout<<"ID2=";cin>>ID2;
+	cout<<firstBattle(HP1,HP2,ID1,ID2,E2)<<"\n"<<"HP1="<<HP1<<"\n"<<"HP2="<<HP2<<"\n";
     return 0;
 	
 }
