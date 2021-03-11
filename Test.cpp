@@ -17,9 +17,9 @@ bool isPrimeNumber(int n) {
 
 //Mission_1 (100-->500)
 int getReady(int& HP, const int& ID, int& M, const int& E1){
-
+if (E1<100 || E1>500) return -999;
 //TH_1 (100-->199)
-if (E1>=100 && E1<=199) {
+else if (E1>=100 && E1<=199) {
     int h=0;int J=0;
     if (ID==0) {
 		h=(E1-100)%64; 
@@ -33,7 +33,6 @@ if (E1>=100 && E1<=199) {
 		}	
 	}
 	if (ID==1)  {HP=HP+75;}	
-    return Result_Mission_1(HP,M) ;
 }
 // TH_2
 else if (E1>=200 && E1<=299) {
@@ -41,59 +40,55 @@ else if (E1>=200 && E1<=299) {
 	MGx=(E1%4)+1;
 	switch (MGx){
 		case 1 : //190
-			if (ID==0)
-				if ((M%2)!=0 && M>=190) {M=M-190;HP=HP+5;}
+			if (ID==0) {if ((M%2)!=0 && M>=190) {M=M-190;HP=HP+5;}}
 			else {M=M-190;HP=HP+5;};
 			break;
 		case 2 ://195
-			if (ID==0)
-				if ((M%2)==0 && M>=195) {M=M-195;HP=HP+7;}
+			if (ID==0) {if ((M%2)==0 && M>=195) {M=M-195;HP=HP+7;}}
 			else {M=M-195;HP=HP+7;}
 			break;
 		case 3 ://200
-			if (ID==0)
-				if ((M%2)!=0 && M>=200) {M=M-200;HP=HP+9;}
+			if (ID==0) {if ((M%2)!=0 && M>=200) {M=M-200;HP=HP+9;}}
 			else {M=M-200;HP=HP+9;}
 			break;
 		case 4 ://205
-			if (ID==0)
-				if ((M%2)==0 && M>=205) {M=M-205;HP=HP+11;}
+			if (ID==0) {if ((M%2)==0 && M>=205) {M=M-205;HP=HP+11;}}
 			else {M=M-205;HP=HP+11;}
 			break;
 	}
-    return Result_Mission_1(HP,M) ;
 }
 // TH_3
 else if (E1>=300 && E1<=399) {
-	int last;
-	last=E1%100;last=last%10;
-	int a; a=last*2;
+	int last_E1;
+	last_E1=E1%100;last_E1=last_E1%10;
+	int last_HP;
+	last_HP=HP%100;last_HP=last_HP%10;
+	int a; 
+	if (isPrimeNumber(last_E1)==true) a=2; else a=1;
 	//Thuong
-	if (isPrimeNumber(last)==true && HP>=600 && M>=500) {
+	if (isPrimeNumber(last_HP)==true && HP>=600 && M>=500) {
 		if (ID==1) {HP=HP+200;M=M-500;}
 		else {HP=HP+(HP*a *2)/100;M=M-500;}
 	} 
 	//Dao
-	if (isPrimeNumber(last)==false && HP>=600 && M>=300) {
+	if (isPrimeNumber(last_HP)==false && HP>=600 && M>=300) {
 		HP=HP+(HP*a)/100;M=M-300;
 	} 
-	return Result_Mission_1(HP,M) ;
+
 }
 // TH_4
 else if (E1>=400 && E1<=499) {
 	if ((E1%5)==0) HP=(HP*90)/100;
-	return Result_Mission_1(HP,M) ;
 }
 // TH_5
 else if (E1==500) {
-	HP=HP/4;
-	M=M/4;
-	return Result_Mission_1(HP,M) ;
+	HP=(HP*3)/4;
+	M=(M*3)/4;
 }
-else return -999;
+return Result_Mission_1(HP,M);
 }
 // Misstion_2 (100-->499)
-
+/*
 int firstBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E2){
 	int win=0;
 	//TH_1
@@ -140,8 +135,7 @@ int firstBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E
 		win= -1;
 	}
 	else if(ID1==1 && ID2==2) {HP1=(HP1*80)/100;win= 0;}
-	return win;100
-
+	return win;
 }
 //Mission_3 (100-->499)
 int secondBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E3){
@@ -154,9 +148,9 @@ int secondBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& 
    	if(E3>=100 && E3<=199) {
  		if (ID2==0) HP2=(HP2*95)/100;
    	}
-	
 	int HP_1=HP1; 
-	if(E3<100 || E3>=500) return win=-999;
+
+	if(E3<100 || E3>=300)  win=-999;
 	else if (E3>=200 && E3<=299){           //TH2
 		if (ID2==0) HP2=(HP2*95)/100;
 		win=0;
@@ -183,15 +177,29 @@ int secondBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& 
 	return win;
   
 }
+//Mission_4
+int finalBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E4){
+	int win=0;
+   //TH_1
+   if(E4<100 || E4>=300) win=-999;
+   else if(E4>=100 && E4<=199){
+	   if (ID2==2) HP2=(HP2*30)/100; else HP2=(HP2*10)/100;
+	   win==0;
+   }
+   else if(E4>=100 && E4<=299){
+	   HP2=0;
+	   win=1;
+   }
+   return  win;
+}
+*/
 int main(){
-	int HP=1000; int M=400;int E=450;int ID=1;
+	int HP=614; 
+	int M=550;
+	int E1=354;
+	int ID=1;
+	cout<<getReady(HP,ID,M,E1)<<"\n"<<HP<<"\n"<<M;
 	int HP1;int HP2;int E3;int ID1;int ID2;
-	cout<<"HP1=";cin>>HP1;
-	cout<<"HP2=";cin>>HP2;
-	cout<<"E3=";cin>>E3;
-	cout<<"ID1=";cin>>ID1;
-	cout<<"ID2=";cin>>ID2;
-	cout<<secondBattle(HP1,HP2,ID1,ID2,E3)<<"\n"<<"HP1="<<HP1<<"\n"<<"HP2="<<HP2<<"\n";
     return 0;
 	
 }
