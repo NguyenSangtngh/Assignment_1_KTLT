@@ -1,11 +1,6 @@
 #include <iostream>
-#include <math.h>
+#include <cmath>
 using namespace std;
-int Result_Mission_1 (int HP,int M){
-	if (M<0) M=0;if (M>1000) M=1000;
-	if (HP<0) HP=0; if (HP>1000) HP=1000;
-	return M+HP;
-}
 bool isPrimeNumber(int n) {
 	bool Pr=true;
 	for (int i=2;i<n ;i++) {
@@ -14,8 +9,7 @@ bool isPrimeNumber(int n) {
 	}
 	return Pr;
 }
-
-//Mission_1 (100-->500)
+//Mission_1 (100-->500)  
 int getReady(int& HP, const int& ID, int& M, const int& E1){
 if (E1<100 || E1>500) return -999;
 //TH_1 (100-->199)
@@ -41,19 +35,19 @@ else if (E1>=200 && E1<=299) {
 	switch (MGx){
 		case 1 : //190
 			if (ID==0) {if ((M%2)!=0 && M>=190) {M=M-190;HP=HP+5;}}
-			else {M=M-190;HP=HP+5;};
+			else if(M>190){M=M-190;HP=HP+5;};
 			break;
 		case 2 ://195
 			if (ID==0) {if ((M%2)==0 && M>=195) {M=M-195;HP=HP+7;}}
-			else {M=M-195;HP=HP+7;}
+			else if(M>195) {M=M-195;HP=HP+7;}
 			break;
 		case 3 ://200
 			if (ID==0) {if ((M%2)!=0 && M>=200) {M=M-200;HP=HP+9;}}
-			else {M=M-200;HP=HP+9;}
+			else if(M>200){M=M-200;HP=HP+9;}
 			break;
 		case 4 ://205
 			if (ID==0) {if ((M%2)==0 && M>=205) {M=M-205;HP=HP+11;}}
-			else {M=M-205;HP=HP+11;}
+			else if (M>205){M=M-205;HP=HP+11;}
 			break;
 	}
 }
@@ -63,70 +57,95 @@ else if (E1>=300 && E1<=399) {
 	last_E1=E1%100;last_E1=last_E1%10;
 	int last_HP;
 	last_HP=HP%100;last_HP=last_HP%10;
-	int a; 
-	if (isPrimeNumber(last_E1)==true) a=2; else a=1;
+	int a;
+	if (isPrimeNumber(last_E1)==true) a=2*last_E1; else a=1;
 	//Thuong
-	if (isPrimeNumber(last_HP)==true && HP>=600 && M>=500) {
-		if (ID==1) {HP=HP+200;M=M-500;}
-		else {HP=HP+(HP*a *2)/100;M=M-500;}
+	if (isPrimeNumber(last_HP)==true && HP>=600 && ID==1 && M>500){
+		HP=HP+200;
+		M=M-500;
+	}
+	else if (isPrimeNumber(last_HP)==true && HP>=600 && M>=500) {
+		float f0;
+		f0= HP*(1+a*2.0/100.0)*1.0;
+		HP=round(f0);    //lam_tron
+		M=M-500;
 	} 
+	
 	//Dao
 	if (isPrimeNumber(last_HP)==false && HP>=600 && M>=300) {
-		HP=HP+(HP*a)/100;M=M-300;
+		float f1;
+		f1=HP*(1+a*1.0/100.0)*1.0;
+		HP=round(f1);
+		M=M-300; //lam tron
 	} 
 
 }
 // TH_4
 else if (E1>=400 && E1<=499) {
-	if ((E1%5)==0) HP=(HP*90)/100;
+	if ((E1%5)==0) {
+		float f2;
+		f2=HP*0.9; 
+		HP=round(f2);}//lam tron
 }
 // TH_5
 else if (E1==500) {
-	HP=(HP*3)/4;
-	M=(M*3)/4;
+	float f3;
+	f3=(HP*3.0)/4.0;  
+	HP=round(f3);  //lamtron
+	f3=(M*3.0)/4.0;
+	M=round(f3);
 }
-return Result_Mission_1(HP,M);
+if (M<0) M=0;if (M>1000) M=1000;
+if (HP<0) HP=0; if (HP>1000) HP=1000;
+return M+HP;
 }
-// Misstion_2 (100-->499)
-/*
+// Misstion_2 (100-->499)  4.3
+
 int firstBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E2){
-	int win=0;
 	//TH_1
+	float f4;int win=0;
 	if (E2>=100 && E2<=199) {
-		HP1=11*HP1/10; HP2=HP2*13/10;
+		f4=HP1*1.1; HP1=round(f4);
+		f4=HP2*1.3; HP2=round(f4);//Chưa làm tròn
 	}
 	//TH_2
 	else if (E2>=200 && E2<=299) {
-		HP1=17*HP1/10; HP2=HP2*12/10;
+		f4=HP1*1.7; HP1=round(f4);
+		f4=HP2*1.2; HP2=round(f4);//Chưa làm tròn
 	}
 	//TH3
 	else if (E2>=300 && E2<=399){
 		if (E2<350) HP1=HP1+30;
-		else HP1=HP1+(E2%100);
+		else HP1=HP1+(E2%100);        
 	}
 	//TH4
 	else if (E2>=400 && E2<=499){
-		HP1=(HP1*130/100)*50/100;
-		HP2=HP2*80/100;
+		f4=HP1*1.3;  HP1=round(f4);
+		if (HP1>1000) HP1=1000;       //CheckHP
+		f4=HP1*0.5;HP1=round(f4);//Chưa làm tròn
+		f4=HP2*0.8;   HP2=round(f4);
 	}
-	int HP_1=HP1; 
+	if (HP1>1000) HP1=1000; if (HP2>1000) HP2=1000; //checkHP
 	//Ko vua & tuong
-	if(E2<100 || E2>=500) return -999;
+	if(E2<100 || E2>=500)  win=-999;
 	else if (ID1==0 && ID2==0) {
-		int m; m=(2*HP1*HP2)/(HP1+HP2)+1; //Chưa làm tròn
+		int m; int HP_1=HP1; 
+		f4=(2.0*HP1*HP2)/(HP1+HP2)*1.0;
+		m=round(f4); //Chưa làm tròn
   		HP1=HP1-abs(HP2-m);
    		HP2=HP2-abs(HP_1-m);
-		if (HP1<0) HP1=0;
+		if (HP1<0) HP1=0;     //Check HP
 		if (HP2<0) HP2=0;
    		if (HP1>HP2) win= 1;
 		else if (HP1==HP2) win= 0;
 		else if (HP1<HP2) win= -1;
-	HP1=(HP1*80)/100; // TH_5
+	f4=HP1*0.8; HP1=round(f4);// TH_5    Chưa làm tròn
 	}
 	//Co vua ko tuong
 	else if (ID1==1 && ID2==0) {
 		HP2=0;
-		HP1=(HP1*80)/100;
+		f4=HP1*0.8; 
+		HP1=round(f4);   // Chưa làm tròn
 		win=1;
 	}
 	//Ko vua co tuong
@@ -134,72 +153,86 @@ int firstBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E
 		HP1=0;
 		win= -1;
 	}
-	else if(ID1==1 && ID2==2) {HP1=(HP1*80)/100;win= 0;}
+	else if(ID1==1 && ID2==2) {f4=HP1*0.8;HP1=round(f4);win=0;}    //Chưa làm tròn
 	return win;
 }
 //Mission_3 (100-->499)
 int secondBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E3){
-   	HP1=1.4*HP1;
-	HP2=1.6*HP2;
-	int win=0;
-   	if(ID1==1) HP1=HP1*2;
-
-   	//TH1
-   	if(E3>=100 && E3<=199) {
- 		if (ID2==0) HP2=(HP2*95)/100;
-   	}
-	int HP_1=HP1; 
-
-	if(E3<100 || E3>=300)  win=-999;
-	else if (E3>=200 && E3<=299){           //TH2
-		if (ID2==0) HP2=(HP2*95)/100;
-		win=0;
-	}
-	else if (ID1==0 && ID2==0) {
-		int m; m=(2*HP1*HP2)/(HP1+HP2)+1; //Chưa làm tròn
-		HP1=HP1-abs(HP2-m);
-		HP2=HP2-abs(HP1-m);
-		if (HP1<0) HP1=0;
-		if (HP2<0) HP2=0;
-		if (HP1>HP2) win=1;
-		else if (HP1==HP2) win=0;
-		else if (HP1<HP2  ) {
-	    if (E3>=100 && E3<=199) HP1=HP_1;
-		win=-1;
+   	int win=0;float f5;
+    if(E3<100 || E3>=300)  win=-999;
+	else {
+		f5=1.4*HP1;
+		HP1=round(f5);  //Chua lam tron
+		f5=1.6*HP2;
+		 HP2=round(f5);  //Chua lam tron
+		 if (HP1>1000) HP1=1000; if (HP2>1000) HP2=1000;  //CheckHP
+   		if(ID1==1) HP1=HP1*2; if (HP1>1000) HP1=1000;
+		 //TH1
+		if (E3>=100 && E3<=199){          
+			if (ID1==0 && ID2==0) {
+				f5=HP2*0.95;
+				HP2=round(f5);  //Chưa làm tròn
+				int m; int HP_1=HP1; 
+				f5=(2.0*HP1*HP2)/(HP1+HP2)*1.0;
+				m=round(f5); //Chưa làm tròn
+				HP1=HP1-abs(HP2-m);
+				HP2=HP2-abs(HP_1-m);
+				if (HP1<0) HP1=0; //CheckHP
+				if (HP2<0) HP2=0;
+				if (HP1>HP2) win=1;
+				else if (HP1==HP2) win=0;  
+				else { win=-1; HP1=HP_1;}
+			}
+			else if (ID1==1 && ID2==0) {
+				HP2=0; win =1;
+			}
+			else if (ID1==0 && ID2==2) {
+				HP1=0; win=-1;
+			}
+			else if (ID1==1 && ID2==2) win=0;
+		}
+		//TH2
+		if (E3>=200 && E3<=299){
+			if (ID2==0) {f5=HP2*0.95;HP2=round(f5);} //Chua Lam Tron
+			win=0;
 		}
 	}
-	else if (ID1==1 && ID2==0) {HP2=0;win=1;}
-	else if (ID1==0 && ID2==2) {
-		if (E3>=100 && E3<=199) HP1=HP_1; else HP1=0;
-		win=-1;
-	}
-	else if (ID1==1 && ID2==2) {win=0;}
-	return win;
-  
+   	
+   return win;
+	
 }
 //Mission_4
 int finalBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E4){
-	int win=0;
+	int win=0;float f6;
    //TH_1
-   if(E4<100 || E4>=300) win=-999;
-   else if(E4>=100 && E4<=199){
-	   if (ID2==2) HP2=(HP2*30)/100; else HP2=(HP2*10)/100;
-	   win==0;
+   if(E4>=100 && E4<=199){
+	   if (ID2==2) HP2=(HP2*30)/100; else {f6=HP2*0.1;HP2=round(f6);} //chua lam tron
+	   win=0;
    }
-   else if(E4>=100 && E4<=299){
+   else if(E4>=200 && E4<=299){
 	   HP2=0;
 	   win=1;
    }
+   else win=-999;
    return  win;
 }
-*/
+
 int main(){
-	int HP=614; 
-	int M=550;
-	int E1=354;
-	int ID=1;
-	cout<<getReady(HP,ID,M,E1)<<"\n"<<HP<<"\n"<<M;
-	int HP1;int HP2;int E3;int ID1;int ID2;
+	int HP=613;
+	int M=401;
+	int E1=355;
+	int ID=0;
+	int HP1=900;
+	int HP2=200 ;
+	int E2=450;
+	int E3=120;
+	int E4=100;
+	int ID1=0;
+	int ID2=0;
+	//cout<<getReady(HP,ID,M,E1)<<"\n"<<HP<<"\n"<<M;
+	cout<<firstBattle(HP1,HP2,ID1,ID2,E2)<<"\n"<<HP1<<"\n"<<HP2;
+   // cout<<secondBattle(HP1,HP2,ID1,ID2,E3)<<"\n"<<HP1<<"\n"<<HP2;
+	//cout<<finalBattle(HP1,HP2,ID1,ID2,E4)<<"\n"<<HP1<<"\n"<<HP2;
     return 0;
 	
 }
