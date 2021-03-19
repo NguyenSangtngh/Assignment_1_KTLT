@@ -3,6 +3,7 @@
 using namespace std;
 bool isPrimeNumber(int n) {
 	bool Pr=true;
+	if (n<2) Pr=false;
 	for (int i=2;i<n ;i++) {
 
 	if ((n%i)==0) {Pr=false;break;} 
@@ -60,7 +61,7 @@ else if (E1>=300 && E1<=399) {
 	int a;
 	if (isPrimeNumber(last_E1)==true) a=2*last_E1; else a=1;
 	//Thuong
-	if (isPrimeNumber(last_HP)==true && HP>=600 && ID==1 && M>500){
+	if (isPrimeNumber(last_HP)==true && HP>=600 && ID==1 && M>=500){
 		HP=HP+200;
 		M=M-500;
 	}
@@ -72,7 +73,7 @@ else if (E1>=300 && E1<=399) {
 	} 
 	
 	//Dao
-	if (isPrimeNumber(last_HP)==false && HP>=600 && M>=300) {
+	else if (isPrimeNumber(last_HP)==false && HP>=600 && M>=300) {
 		float f1;
 		f1=HP*(1+a*1.0/100.0)*1.0;
 		HP=round(f1);
@@ -122,8 +123,9 @@ int firstBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E
 	else if (E2>=400 && E2<=499){
 		f4=HP1*1.3;  HP1=round(f4);
 		if (HP1>1000) HP1=1000;       //CheckHP
-		f4=HP1*0.5;HP1=round(f4);//Chưa làm tròn
 		f4=HP2*0.8;   HP2=round(f4);
+		f4=HP1*0.5;HP1=round(f4);//Chưa làm tròn
+		
 	}
 	if (HP1>1000) HP1=1000; if (HP2>1000) HP2=1000; //checkHP
 	//Ko vua & tuong
@@ -165,7 +167,7 @@ int secondBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& 
 		HP1=round(f5);  //Chua lam tron
 		f5=1.6*HP2;
 		 HP2=round(f5);  //Chua lam tron
-		 if (HP1>1000) HP1=1000; if (HP2>1000) HP2=1000;  //CheckHP
+		if (HP1>1000) HP1=1000; if (HP2>1000) HP2=1000;  //CheckHP
    		if(ID1==1) HP1=HP1*2; if (HP1>1000) HP1=1000;
 		 //TH1
 		if (E3>=100 && E3<=199){          
@@ -206,7 +208,7 @@ int finalBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E
 	int win=0;float f6;
    //TH_1
    if(E4>=100 && E4<=199){
-	   if (ID2==2) HP2=(HP2*30)/100; else {f6=HP2*0.1;HP2=round(f6);} //chua lam tron
+	   if (ID2==2) {f6=HP2*0.3;HP2=round(f6);} else {f6=HP2*0.1;HP2=round(f6);} //chua lam tron
 	   win=0;
    }
    else if(E4>=200 && E4<=299){
@@ -218,20 +220,19 @@ int finalBattle(int& HP1, int& HP2, const int& ID1, const int& ID2, const int& E
 }
 
 int main(){
-	int HP=613;
-	int M=401;
-	int E1=355;
-	int ID=0;
-	int HP1=900;
-	int HP2=200 ;
-	int E2=450;
-	int E3=120;
-	int E4=100;
+	int M1=731;
+	int M2=611;
+	int E1=499;int E2=333;int E3=224;int E4=105;
+	int HP1=717;
+	int HP2=950;
 	int ID1=0;
 	int ID2=0;
-	//cout<<getReady(HP,ID,M,E1)<<"\n"<<HP<<"\n"<<M;
-	cout<<firstBattle(HP1,HP2,ID1,ID2,E2)<<"\n"<<HP1<<"\n"<<HP2;
-   // cout<<secondBattle(HP1,HP2,ID1,ID2,E3)<<"\n"<<HP1<<"\n"<<HP2;
+//200 300
+//102 103 104 205
+	//cout<<getReady(HP1,ID1,M1,E1)<<"\n"<<HP1<<"\n"<<M1;
+	//cout<<getReady(HP2,ID2,M2,E1)<<"\n"<<HP2<<"\n"<<M2;
+	//cout<<firstBattle(HP1,HP2,ID1,ID2,E2)<<"\n"<<HP1<<"\n"<<HP2;
+   //cout<<secondBattle(HP1,HP2,ID1,ID2,E3)<<"\n"<<HP1<<"\n"<<HP2;
 	//cout<<finalBattle(HP1,HP2,ID1,ID2,E4)<<"\n"<<HP1<<"\n"<<HP2;
     return 0;
 	
