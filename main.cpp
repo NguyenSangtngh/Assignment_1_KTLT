@@ -35,6 +35,8 @@ int main(int argc, const char * argv[]) {
     bool isRead = readFile(filename, HP1, HP2, ID1, ID2, M1, M2, E1, E2, E3, E4);
     if (isRead){
         //Task 1
+        //cout<<HP1<<" "<<HP2<<" "<<"\n"<<ID1<<" "<<ID2<<"\n"<<E1<<" "<<E2<<" "<<E3<<" "<<E4;
+        
         cout << getReady(HP1, ID1, M1, E1) << endl;
         cout << getReady(HP2, ID2, M2, E1) << endl;
         //Task 2
@@ -45,7 +47,7 @@ int main(int argc, const char * argv[]) {
         cout << HP1 << " "<< HP2 << " "<< endl;
         //Task 4
         cout << finalBattle(HP1, HP2, ID1, ID2, E4)<< endl;
-        cout << HP1 << " "<< HP2 << " "<< endl;
+       cout << HP1 << " "<< HP2 << " "<< endl;
     }
     else{
         cout << "Cannot read input file";
